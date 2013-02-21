@@ -74,9 +74,9 @@ if __name__ == "__main__":
                 game_test.solve()
                 game_test.invert_solve()
                 print "Stable matching:"
-                print "\t",game_test.stable_matching
+                print "\t", game_test.stable_matching
                 print "Inverted stable matching:"
-                print "\t",game_test.inverted_stable_matching
+                print "\t", game_test.inverted_stable_matching
             else:
                 sys.exit("Passed argument must be a csv file.")
 
