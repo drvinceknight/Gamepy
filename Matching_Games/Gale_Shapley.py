@@ -2,7 +2,7 @@
 import copy
 
 
-def Gale_Shapley_algorithm(guys, guyprefers, galpreferes):
+def Gale_Shapley_algorithm(guys, guyprefers, galprefers):
     guysfree = guys[:]
     engaged = {}
     guyprefers2 = copy.deepcopy(guyprefers)
@@ -50,14 +50,42 @@ class Matching_Game():
 
 
 if __name__ == "__main__":
-    guyprefers = {'A': ['Y', 'X', 'Z'], 'B': ['C', 'B', 'A'], 'C': ['X', 'Z', 'Y']}
-    galprefers = {'X': ['B', 'A', 'C'], 'Y': ['C', 'B', 'A'], 'Z': ['A', 'C', 'B']}
+    import sys
 
-    guyprefers = {'J': ['A', 'D', 'C', 'B'], 'K': ['A', 'B', 'C', 'D'], 'L': ['B', 'D', 'C', 'A'], 'M': ['C', 'A', 'B', 'D']}
-    galprefers = {'A': ['L', 'J', 'K', 'M'], 'B': ['J', 'M', 'L', 'K'], 'C': ['K', 'M', 'L', 'J'], 'D': ['M', 'K', 'J', 'L']}
+    if len(sys.argv) > 1:
+            if sys.argv[1][-4:] == ".csv":
+                import csv
+                outfile = open(sys.argv[1], "rb")
+                raw_input = csv.reader(outfile)
+                raw_input = [row for row in raw_input]
+                outfile.close()
 
-    game_test = Matching_Game(guyprefers, galprefers)
-    game_test.solve()
-    print game_test.stable_matching
-    game_test.invert_solve()
-    print game_test.inverted_stable_matching
+                number_of_suitors = raw_input.index([])
+                suitors = [row[0] for row in raw_input[:number_of_suitors]]
+                suitor_preferences = {}
+                for e in raw_input[:number_of_suitors]:
+                    suitor_preferences[e[0]] = e[1:]
+                reviewers = [row[0] for row in raw_input[number_of_suitors + 1:]]
+                reviewer_preferences = {}
+                for e in raw_input[number_of_suitors + 1:]:
+                    reviewer_preferences[e[0]] = e[1:]
+
+                game_test = Matching_Game(suitor_preferences, reviewer_preferences)
+                game_test.solve()
+                game_test.invert_solve()
+                print "Stable matching:"
+                print "\t",game_test.stable_matching
+                print "Inverted stable matching:"
+                print "\t",game_test.inverted_stable_matching
+            else:
+                sys.exit("Passed argument must be a csv file.")
+
+    else:
+        guyprefers = {'J': ['A', 'D', 'C', 'B'], 'K': ['A', 'B', 'C', 'D'], 'L': ['B', 'D', 'C', 'A'], 'M': ['C', 'A', 'B', 'D']}
+        galprefers = {'A': ['L', 'J', 'K', 'M'], 'B': ['J', 'M', 'L', 'K'], 'C': ['K', 'M', 'L', 'J'], 'D': ['M', 'K', 'J', 'L']}
+
+        game_test = Matching_Game(guyprefers, galprefers)
+        game_test.solve()
+        print game_test.stable_matching
+        game_test.invert_solve()
+        print game_test.inverted_stable_matching
