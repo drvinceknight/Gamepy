@@ -94,3 +94,20 @@ class ABM():
             for r in range(self.rounds_per_generation):
                 self.play_tournament()
             self.reproduce()
+
+        # Count results:
+        self.row_frequencies = {}
+        for s in self.row_strategies:
+            self.row_frequencies[s] = 0
+            for e in self.row_agents:
+                if e.strategy == s:
+                    self.row_frequencies[s] += 1
+
+        self.col_frequencies = {}
+        for s in self.col_strategies:
+            self.col_frequencies[s] = 0
+            for e in self.col_agents:
+                if e.strategy == s:
+                    self.col_frequencies[s] += 1
+
+test = ABM(100, 5, 10, .2, .05, [[1, -1], [-1, 1]], [[-1, 1], [1, -1]])
