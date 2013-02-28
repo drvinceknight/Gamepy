@@ -28,7 +28,7 @@ class Agent():
     """
     An agent class
     """
-    def ___init__(self, strategy):
+    def __init__(self, strategy):
         self.strategy = strategy
         self.utility = 0
 
@@ -83,15 +83,22 @@ class ABM():
             # kill lowest fitness row agent:
             kill_one_agent_with_given_utility(self.row_agents, min([e.utility for e in self.row_agents]))
             # reproduce highest fitness row agent:
-            reproduce_one_agent_with_given_utility(self.row_agents, max([e.utility for e in self.row_agents]), self.row_strategies)
+            reproduce_one_agent_with_given_utility(self.row_agents, max([e.utility for e in self.row_agents]), self.mutation_rate, self.row_strategies)
             # kill lowest fitness col agent:
             kill_one_agent_with_given_utility(self.col_agents, min([e.utility for e in self.col_agents]))
             # reproduce highest fitness col agent:
-            reproduce_one_agent_with_given_utility(self.col_agents, max([e.utility for e in self.col_agents]), self.col_strategies)
+            reproduce_one_agent_with_given_utility(self.col_agents, max([e.utility for e in self.col_agents]), self.mutation_rate, self.col_strategies)
+            d += 1
 
     def simulate(self):
         for g in range(self.generations):
+            print "generation: %s of %s" % (g + 1, self.generations)
             for r in range(self.rounds_per_generation):
+                print "\tround: %s of %s" % (r + 1, self.rounds_per_generation)
+                # Reset all utilities
+                for k in range(self.number_of_agents):
+                    self.row_agents[k].utility = 0
+                    self.col_agents[k].utility = 0
                 self.play_tournament()
             self.reproduce()
 
@@ -110,4 +117,8 @@ class ABM():
                 if e.strategy == s:
                     self.col_frequencies[s] += 1
 
-test = ABM(100, 5, 10, .2, .05, [[1, -1], [-1, 1]], [[-1, 1], [1, -1]])
+test = ABM(1000, 100, 10, .3, .05, [[4, 0], [5, 2]], [[4, 5], [0, 2]])
+test = ABM(10000, 1000, 10, .0001, .02, [[1, -1], [-1, 1]], [[-1, 1], [1, -1]])
+test.simulate()
+print test.row_frequencies
+print test.col_frequencies
