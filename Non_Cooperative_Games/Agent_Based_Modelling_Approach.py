@@ -1,6 +1,7 @@
 """
 Algorithm from 'Game Theory Evolving'
 """
+from __future__ import division
 import copy
 import random
 
@@ -53,6 +54,17 @@ def reproduce_one_agent_with_given_utility(agents, utility, mutation_rate, strat
         k += 1
 
 
+def return_current_strategy_distribution(agents, strategies):
+        # Count results:
+        frequencies = []
+        for s in strategies:
+            frequencies.append(0)
+            for e in agents:
+                if e.strategy == s:
+                    frequencies[-1] += 1
+        return [e / len(agents) for e in frequencies]
+
+
 class ABM():
     """
     The model
@@ -90,7 +102,7 @@ class ABM():
             reproduce_one_agent_with_given_utility(self.col_agents, max([e.utility for e in self.col_agents]), self.mutation_rate, self.col_strategies)
             d += 1
 
-    def simulate(self):
+    def simulate(self, plot=False):
         for g in range(self.generations):
             print "generation: %s of %s" % (g + 1, self.generations)
             for r in range(self.rounds_per_generation):
@@ -102,23 +114,26 @@ class ABM():
                 self.play_tournament()
             self.reproduce()
 
-        # Count results:
-        self.row_frequencies = {}
-        for s in self.row_strategies:
-            self.row_frequencies[s] = 0
-            for e in self.row_agents:
-                if e.strategy == s:
-                    self.row_frequencies[s] += 1
+        self.row_distribution = return_current_strategy_distribution(self.row_agents, self.row_strategies)
+        self.col_distribution = return_current_strategy_distribution(self.col_agents, self.col_strategies)
 
-        self.col_frequencies = {}
-        for s in self.col_strategies:
-            self.col_frequencies[s] = 0
-            for e in self.col_agents:
-                if e.strategy == s:
-                    self.col_frequencies[s] += 1
 
-test = ABM(1000, 100, 10, .3, .05, [[4, 0], [5, 2]], [[4, 5], [0, 2]])
-test = ABM(10000, 1000, 10, .0001, .02, [[1, -1], [-1, 1]], [[-1, 1], [1, -1]])
+test = ABM(100, 10, 10, .3, .05, [[4, 0], [5, 2]], [[4, 5], [0, 2]])
+# test = ABM(10000, 1000, 10, .0001, .02, [[1, -1], [-1, 1]], [[-1, 1], [1, -1]])
 test.simulate()
-print test.row_frequencies
-print test.col_frequencies
+print test.row_distribution
+print test.col_distribution
+#import matplotlib.pyplot as plt
+#
+#data=[1,2,3,4]
+#plt.ion()
+#plt.plot(data)
+#plt.draw()
+#data.append(raw_input("Enter something: "))
+#plt.plot(data)
+#plt.draw()
+#data.append(raw_input("Enter something: "))
+#plt.plot(data)
+#plt.draw()
+#plt.show(block=True)
+#
