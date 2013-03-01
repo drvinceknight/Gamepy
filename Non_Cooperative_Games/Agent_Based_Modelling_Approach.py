@@ -114,30 +114,38 @@ class ABM():
                 self.play_tournament()
             self.reproduce()
 
-        if plot:
-            self.row_distribution = return_current_strategy_distribution(self.row_agents, self.row_strategies)
-            self.col_distribution = return_current_strategy_distribution(self.col_agents, self.col_strategies)
+            if plot:
+                self.row_distribution = return_current_strategy_distribution(self.row_agents, self.row_strategies)
+                self.col_distribution = return_current_strategy_distribution(self.col_agents, self.col_strategies)
 
         self.row_distribution = return_current_strategy_distribution(self.row_agents, self.row_strategies)
         self.col_distribution = return_current_strategy_distribution(self.col_agents, self.col_strategies)
 
 
-test = ABM(100, 10, 10, .3, .05, [[4, 0], [5, 2]], [[4, 5], [0, 2]])
-# test = ABM(10000, 1000, 10, .0001, .02, [[1, -1], [-1, 1]], [[-1, 1], [1, -1]])
-test.simulate(True)
-print test.row_distribution
-print test.col_distribution
-#import matplotlib.pyplot as plt
-#
-#data=[1,2,3,4]
-#plt.ion()
-#plt.plot(data)
-#plt.draw()
-#data.append(raw_input("Enter something: "))
-#plt.plot(data)
-#plt.draw()
-#data.append(raw_input("Enter something: "))
-#plt.plot(data)
-#plt.draw()
-#plt.show(block=True)
-#
+#test = ABM(100, 10, 10, .3, .05, [[4, 0], [5, 2]], [[4, 5], [0, 2]])
+## test = ABM(10000, 1000, 10, .0001, .02, [[1, -1], [-1, 1]], [[-1, 1], [1, -1]])
+#test.simulate(True)
+#print test.row_distribution
+#print test.col_distribution
+
+import matplotlib.pyplot as plt
+
+data=[[.25],[.75]]
+plt.ion()
+for e in data:
+    plt.plot(e)
+plt.draw()
+for k in range(2):
+    data[k].append([.4,.6][k])
+raw_input()
+for e in data:
+    plt.plot(e)
+plt.draw()
+for k in range(2):
+    data[k].append([.5,.5][k])
+raw_input()
+for e in data:
+    plt.plot(e)
+plt.draw()
+plt.show(block=True)
+
