@@ -5,25 +5,6 @@ from __future__ import division
 import copy
 import random
 
-# Need Individuals
-"""
-Define class that has attributes:
-- Strategy
-- Payoff
-"""
-
-# Let me try to code a program that solves matching pennies game...
-
-"""
-- Create population of players,
-- Give them random strategies? (Or pure strategies?)
-- Choose number of rounds per generation, play those rounds keeping everyone's core
-- Once rounds are finished, calculate number of agents that will die due to
-death rate
-- Until those many agents die, kill worst agent and let best agent replicate with mutation probability mu. Mutation here is probability of picking a new strategy.
-- Keep repeating above until number of generations have been created
-"""
-
 
 class Agent():
     """
@@ -63,6 +44,12 @@ def return_current_strategy_distribution(agents, strategies):
                 if e.strategy == s:
                     frequencies[-1] += 1
         return [e / len(agents) for e in frequencies]
+
+
+def update_plot(plt, data):
+    for e in data:
+        plt.plot(e)
+        plt.draw()
 
 
 class ABM():
@@ -105,6 +92,18 @@ class ABM():
     def simulate(self, plot=False):
         self.row_history = [[] for e in range(len(self.row_strategies))]
         self.col_history = [[] for e in range(len(self.col_strategies))]
+        if plot:
+            import matplotlib.pyplot as plt
+            import matplotlib.cm as cm
+            plt.ion()
+            for k in range(len(self.row_strategies)):
+                c = cm.spring((k + 1) / len(self.row_strategies))
+                plt.plot(self.row_history[k], color=c, label="Row strategy: %s" % (k + 1))
+            for k in range(len(self.col_strategies)):
+                c = cm.winter((k + 1) / len(self.col_strategies))
+                plt.plot(self.col_history[k], color=c, label="Col strategy: %s" % (k + 1))
+            plt.legend()
+            plt.draw()
         for g in range(self.generations):
             print "generation: %s of %s" % (g + 1, self.generations)
             for r in range(self.rounds_per_generation):
@@ -114,44 +113,33 @@ class ABM():
                     self.row_agents[k].utility = 0
                     self.col_agents[k].utility = 0
                 self.play_tournament()
+            # Calculate distributions and update history
             self.row_distribution = return_current_strategy_distribution(self.row_agents, self.row_strategies)
             for k in range(len(self.row_strategies)):
                 self.row_history[k].append(self.row_distribution[k])
             self.col_distribution = return_current_strategy_distribution(self.col_agents, self.col_strategies)
             for k in range(len(self.col_strategies)):
                 self.col_history[k].append(self.col_distribution[k])
-
+            # Reproduce
             self.reproduce()
 
             if plot:
+                for k in range(len(self.row_strategies)):
+                    c = cm.spring((k + 1) / len(self.row_strategies))
+                    plt.plot(self.row_history[k], color=c)
+                for k in range(len(self.col_strategies)):
+                    c = cm.winter((k + 1) / len(self.col_strategies))
+                    plt.plot(self.col_history[k], color=c)
+                plt.draw()
                 print self.row_distribution
                 print self.col_distribution
+        if plot:
+            plt.show(block=True)
 
 #        self.row_distribution = return_current_strategy_distribution(self.row_agents, self.row_strategies)
 #        self.col_distribution = return_current_strategy_distribution(self.col_agents, self.col_strategies)
 
 
-#test = ABM(100, 10, 10, .3, .05, [[4, 0], [5, 2]], [[4, 5], [0, 2]])
+test = ABM(100, 10, 10, .3, .05, [[4, 0], [5, 2]], [[4, 5], [0, 2]])
 ## test = ABM(10000, 1000, 10, .0001, .02, [[1, -1], [-1, 1]], [[-1, 1], [1, -1]])
-#test.simulate(True)
-
-import matplotlib.pyplot as plt
-
-data=[[.25],[.75]]
-plt.ion()
-for e in data:
-    plt.plot(e, color='.3')
-plt.draw()
-for k in range(2):
-    data[k].append([.4,.6][k])
-raw_input()
-for e in data:
-    plt.plot(e, color='.3')
-plt.draw()
-for k in range(2):
-    data[k].append([.5,.5][k])
-raw_input()
-for e in data:
-    plt.plot(e)
-plt.draw()
-plt.show(block=True)
+test.simulate(True)
