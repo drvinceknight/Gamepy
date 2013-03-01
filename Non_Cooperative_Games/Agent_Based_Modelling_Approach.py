@@ -103,6 +103,8 @@ class ABM():
             d += 1
 
     def simulate(self, plot=False):
+        self.row_history = [[] for e in range(len(self.row_strategies))]
+        self.col_history = [[] for e in range(len(self.col_strategies))]
         for g in range(self.generations):
             print "generation: %s of %s" % (g + 1, self.generations)
             for r in range(self.rounds_per_generation):
@@ -112,34 +114,39 @@ class ABM():
                     self.row_agents[k].utility = 0
                     self.col_agents[k].utility = 0
                 self.play_tournament()
+            self.row_distribution = return_current_strategy_distribution(self.row_agents, self.row_strategies)
+            for k in range(len(self.row_strategies)):
+                self.row_history[k].append(self.row_distribution[k])
+            self.col_distribution = return_current_strategy_distribution(self.col_agents, self.col_strategies)
+            for k in range(len(self.col_strategies)):
+                self.col_history[k].append(self.col_distribution[k])
+
             self.reproduce()
 
             if plot:
-                self.row_distribution = return_current_strategy_distribution(self.row_agents, self.row_strategies)
-                self.col_distribution = return_current_strategy_distribution(self.col_agents, self.col_strategies)
+                print self.row_distribution
+                print self.col_distribution
 
-        self.row_distribution = return_current_strategy_distribution(self.row_agents, self.row_strategies)
-        self.col_distribution = return_current_strategy_distribution(self.col_agents, self.col_strategies)
+#        self.row_distribution = return_current_strategy_distribution(self.row_agents, self.row_strategies)
+#        self.col_distribution = return_current_strategy_distribution(self.col_agents, self.col_strategies)
 
 
 #test = ABM(100, 10, 10, .3, .05, [[4, 0], [5, 2]], [[4, 5], [0, 2]])
 ## test = ABM(10000, 1000, 10, .0001, .02, [[1, -1], [-1, 1]], [[-1, 1], [1, -1]])
 #test.simulate(True)
-#print test.row_distribution
-#print test.col_distribution
 
 import matplotlib.pyplot as plt
 
 data=[[.25],[.75]]
 plt.ion()
 for e in data:
-    plt.plot(e)
+    plt.plot(e, color='.3')
 plt.draw()
 for k in range(2):
     data[k].append([.4,.6][k])
 raw_input()
 for e in data:
-    plt.plot(e)
+    plt.plot(e, color='.3')
 plt.draw()
 for k in range(2):
     data[k].append([.5,.5][k])
@@ -148,4 +155,3 @@ for e in data:
     plt.plot(e)
 plt.draw()
 plt.show(block=True)
-
