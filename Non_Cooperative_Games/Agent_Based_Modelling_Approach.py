@@ -114,13 +114,17 @@ class ABM():
                 self.play_tournament()
             self.reproduce()
 
+        if plot:
+            self.row_distribution = return_current_strategy_distribution(self.row_agents, self.row_strategies)
+            self.col_distribution = return_current_strategy_distribution(self.col_agents, self.col_strategies)
+
         self.row_distribution = return_current_strategy_distribution(self.row_agents, self.row_strategies)
         self.col_distribution = return_current_strategy_distribution(self.col_agents, self.col_strategies)
 
 
 test = ABM(100, 10, 10, .3, .05, [[4, 0], [5, 2]], [[4, 5], [0, 2]])
 # test = ABM(10000, 1000, 10, .0001, .02, [[1, -1], [-1, 1]], [[-1, 1], [1, -1]])
-test.simulate()
+test.simulate(True)
 print test.row_distribution
 print test.col_distribution
 #import matplotlib.pyplot as plt
