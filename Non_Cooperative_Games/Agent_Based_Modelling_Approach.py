@@ -31,7 +31,7 @@ def reproduce_one_agent_with_given_utility(agents, utility, mutation_rate, strat
         if agents[k].utility == utility:
             agents.append(copy.deepcopy(agents[k]))
             if random.random() < mutation_rate:
-                agents[-1].strategy = random.choice(strategies)
+                agents[-1].strategy = random.choice([s for s in strategies if s != agents[-1].strategy])
         k += 1
 
 
@@ -44,12 +44,6 @@ def return_current_strategy_distribution(agents, strategies):
                 if e.strategy == s:
                     frequencies[-1] += 1
         return [e / len(agents) for e in frequencies]
-
-
-def update_plot(plt, data):
-    for e in data:
-        plt.plot(e)
-        plt.draw()
 
 
 class ABM():
@@ -96,18 +90,23 @@ class ABM():
             import matplotlib.pyplot as plt
             import matplotlib.cm as cm
             plt.ion()
+            plt.ylim(0, 1)
+            plt.xlabel("Generations (max=%s)" % self.generations)
+            plt.ylabel("Probability")
             for k in range(len(self.row_strategies)):
                 c = cm.spring((k + 1) / len(self.row_strategies))
                 plt.plot(self.row_history[k], color=c, label="Row strategy: %s" % (k + 1))
             for k in range(len(self.col_strategies)):
                 c = cm.winter((k + 1) / len(self.col_strategies))
                 plt.plot(self.col_history[k], color=c, label="Col strategy: %s" % (k + 1))
-            plt.legend()
+
+            plt.legend(loc="upper left")
             plt.draw()
         for g in range(self.generations):
-            print "generation: %s of %s" % (g + 1, self.generations)
+            print "\n----------------------"
+            print "\nGeneration: %s of %s" % (g + 1, self.generations)
             for r in range(self.rounds_per_generation):
-                print "\tround: %s of %s" % (r + 1, self.rounds_per_generation)
+                print "\tRound: %s of %s" % (r + 1, self.rounds_per_generation)
                 # Reset all utilities
                 for k in range(self.number_of_agents):
                     self.row_agents[k].utility = 0
@@ -121,6 +120,10 @@ class ABM():
             for k in range(len(self.col_strategies)):
                 self.col_history[k].append(self.col_distribution[k])
             # Reproduce
+            print "\nRow players strategy distribution:"
+            print "\t", self.row_distribution
+            print "\nCol players strategy distribution:"
+            print "\t", self.col_distribution
             self.reproduce()
 
             if plot:
@@ -131,8 +134,6 @@ class ABM():
                     c = cm.winter((k + 1) / len(self.col_strategies))
                     plt.plot(self.col_history[k], color=c)
                 plt.draw()
-                print self.row_distribution
-                print self.col_distribution
         if plot:
             plt.show(block=True)
 
@@ -140,6 +141,10 @@ class ABM():
 #        self.col_distribution = return_current_strategy_distribution(self.col_agents, self.col_strategies)
 
 
-test = ABM(100, 10, 10, .3, .05, [[4, 0], [5, 2]], [[4, 5], [0, 2]])
-## test = ABM(10000, 1000, 10, .0001, .02, [[1, -1], [-1, 1]], [[-1, 1], [1, -1]])
+#test = ABM(100, 10, 10, .3, .05, [[4, 0], [5, 2]], [[4, 5], [0, 2]])
+test = ABM(1000, 1000, 5, .1, .3, [[8, 10], [10, 6]], [[-8, -10], [-10, -2]])
+#test = ABM(10000, 1000, 10, .0001, .02, [[4, 2], [1, 3]], [[3, 1], [2, 10]])
+#test = ABM(1000, 100, 5, .05, .1, [[10, 1], [1, 2]], [[2, 1], [1, 10]])
+#test = ABM(100, 10000, 5, .01, .1, [[0, -1, 1], [1, 0, -1], [-1, 1, 0]], [[0, 1, -1], [-1, 0, 1], [1, -1, 0]])
+#test = ABM(100, 1000, 3, .25, .1, [[3, -1, -3], [-3, 3, -1], [-4, -3, 3]], [[-3, 1, 3], [3, -3, 1], [4, 3, -3]])
 test.simulate(True)
