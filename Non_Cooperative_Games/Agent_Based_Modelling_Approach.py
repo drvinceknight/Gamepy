@@ -16,6 +16,9 @@ class Agent():
 
 
 def kill_one_agent_with_given_utility(agents, utility):
+    """
+    This method is used to delete a particular agent with given utility
+    """
     number_of_agents = len(agents)
     k = 0
     while len(agents) == number_of_agents:
@@ -25,6 +28,9 @@ def kill_one_agent_with_given_utility(agents, utility):
 
 
 def reproduce_one_agent_with_given_utility(agents, utility, mutation_rate, strategies):
+    """
+    Deep copy an agent with a given utility. When copying an agent there is a potential mutation that will make the new agent have a different strategy.
+    """
     number_of_agents = len(agents)
     k = 0
     while len(agents) == number_of_agents:
@@ -36,19 +42,21 @@ def reproduce_one_agent_with_given_utility(agents, utility, mutation_rate, strat
 
 
 def return_current_strategy_distribution(agents, strategies):
-        # Count results:
-        frequencies = []
-        for s in strategies:
-            frequencies.append(0)
-            for e in agents:
-                if e.strategy == s:
-                    frequencies[-1] += 1
-        return [e / len(agents) for e in frequencies]
+    """
+    This function returns the current strategy distribution amongst a set of agents.
+    """
+    frequencies = []
+    for s in strategies:
+        frequencies.append(0)
+        for e in agents:
+            if e.strategy == s:
+                frequencies[-1] += 1
+    return [e / len(agents) for e in frequencies]
 
 
 class ABM():
     """
-    The model
+    This is a class defining an ABM of a game.
     """
     def __init__(self, number_of_agents, generations, rounds_per_generation, death_rate, mutation_rate, row_matrix, col_matrix):
         self.number_of_agents = number_of_agents
