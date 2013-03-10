@@ -59,6 +59,9 @@ class ABM():
     This is a class defining an ABM of a game.
     """
     def __init__(self, number_of_agents, generations, rounds_per_generation, death_rate, mutation_rate, row_matrix, col_matrix):
+        """
+        Initialize all variables
+        """
         self.number_of_agents = number_of_agents
         self.generations = generations
         self.rounds_per_generation = rounds_per_generation
@@ -73,12 +76,20 @@ class ABM():
         self.col_matrix = col_matrix
 
     def play_tournament(self):
+        """
+        This randomly plays all row agents against all column agents.
+        """
+        # Here we shuffle all column players
         random.shuffle(self.col_agents)
         for i in range(self.number_of_agents):
+            # Increment utilities of each player
             self.row_agents[i].utility += self.row_matrix[self.row_agents[i].strategy][self.col_agents[i].strategy]
             self.col_agents[i].utility += self.col_matrix[self.row_agents[i].strategy][self.col_agents[i].strategy]
 
     def reproduce(self):
+        """
+        This kills enough row and col players with lowest utility so as to fit with death rate. After that we reproduce players with highest utility to ensure we have constant population numbers.
+        """
         d = 0
         while d < self.number_of_deaths_per_generation:
             # kill lowest fitness row agent:
@@ -92,25 +103,34 @@ class ABM():
             d += 1
 
     def simulate(self, plot=False):
+        """
+        This runs the simulation.
+        """
+        # Initialising history lists for distribution of strategies
         self.row_history = [[] for e in range(len(self.row_strategies))]
         self.col_history = [[] for e in range(len(self.col_strategies))]
         if plot:
+            # If plot is true we plot the strategy distributions dynamically
             import matplotlib.pyplot as plt
             import matplotlib.cm as cm
-            plt.ion()
-            plt.ylim(0, 1)
-            plt.xlabel("Generations (max=%s)" % self.generations)
-            plt.ylabel("Probability")
+            plt.ion()  # Turn interactive mode on (so that we can graph dynamically.
+            plt.ylim(0, 1)  # Set ylim to have min 0 and max 1
+            plt.xlabel("Generations (max=%s)" % self.generations)  # Label for x axis
+            plt.ylabel("Probability")  # Label for y axis
             for k in range(len(self.row_strategies)):
+                # Plot all row strategies
                 c = cm.spring((k + 1) / len(self.row_strategies))
                 plt.plot(self.row_history[k], color=c, label="Row strategy: %s" % (k + 1))
             for k in range(len(self.col_strategies)):
+                # Plot all col strategies
                 c = cm.winter((k + 1) / len(self.col_strategies))
                 plt.plot(self.col_history[k], color=c, label="Col strategy: %s" % (k + 1))
 
             plt.legend(loc="upper left")
             plt.draw()
+
         for g in range(self.generations):
+            # In a loop to r
             print "\n----------------------"
             print "\nGeneration: %s of %s" % (g + 1, self.generations)
             for r in range(self.rounds_per_generation):
@@ -127,11 +147,11 @@ class ABM():
             self.col_distribution = return_current_strategy_distribution(self.col_agents, self.col_strategies)
             for k in range(len(self.col_strategies)):
                 self.col_history[k].append(self.col_distribution[k])
-            # Reproduce
             print "\nRow players strategy distribution:"
             print "\t", self.row_distribution
             print "\nCol players strategy distribution:"
             print "\t", self.col_distribution
+            # Reproduce
             self.reproduce()
 
             if plot:
