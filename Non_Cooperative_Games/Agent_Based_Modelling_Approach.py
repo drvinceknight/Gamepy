@@ -1,9 +1,9 @@
-"""
-Algorithm from 'Game Theory Evolving'
-"""
 from __future__ import division
 import copy
 import random
+"""
+Algorithm from 'Game Theory Evolving'
+"""
 
 
 class Agent():
@@ -58,7 +58,7 @@ class ABM():
     """
     This is a class defining an ABM of a game.
     """
-    def __init__(self, number_of_agents, generations, rounds_per_generation, death_rate, mutation_rate, row_matrix, col_matrix):
+    def __init__(self, number_of_agents, generations, rounds_per_generation, death_rate, mutation_rate, row_matrix, col_matrix, initial_strategy_distribution=False):
         """
         Initialize all variables
         """
@@ -70,10 +70,16 @@ class ABM():
         self.mutation_rate = mutation_rate
         self.row_strategies = range(len(row_matrix))
         self.col_strategies = range(len(col_matrix))
-        self.row_agents = [Agent(random.choice(self.row_strategies)) for e in range(number_of_agents)]
-        self.col_agents = [Agent(random.choice(self.col_strategies)) for e in range(number_of_agents)]
         self.row_matrix = row_matrix
         self.col_matrix = col_matrix
+        if not initial_strategy_distribution:
+            # If no initial strategy distribution is passed
+            self.row_agents = [Agent(random.choice(self.row_strategies)) for e in range(number_of_agents)]
+            self.col_agents = [Agent(random.choice(self.col_strategies)) for e in range(number_of_agents)]
+        else:
+            # Include code to pick agents according to a given distribution
+            self.row_agents = [Agent(random.choice([strategy for strategy in initial_strategy_distribution[0] for count in range(initial_strategy_distribution[0][strategy])])) for e in range(number_of_agents)]
+            self.col_agents = [Agent(random.choice([strategy for strategy in initial_strategy_distribution[1] for count in range(initial_strategy_distribution[1][strategy])])) for e in range(number_of_agents)]
 
     def play_tournament(self):
         """
@@ -107,6 +113,11 @@ class ABM():
         This runs the simulation.
         """
         # Initialising history lists for distribution of strategies
+
+        # Some debugging
+        # import pdb
+        # pdb.set_trace()
+
         self.row_history = [[] for e in range(len(self.row_strategies))]
         self.col_history = [[] for e in range(len(self.col_strategies))]
         if plot:
@@ -124,18 +135,19 @@ class ABM():
             for k in range(len(self.col_strategies)):
                 # Plot all col strategies
                 c = cm.winter((k + 1) / len(self.col_strategies))
-                plt.plot(self.col_history[k], color=c, label="Col strategy: %s" % (k + 1))
+                plt.plot(self.col_history[k], "--", color=c, label="Col strategy: %s" % (k + 1))
 
             plt.legend(loc="upper left")
             plt.draw()
 
         for g in range(self.generations):
-            # In a loop to r
+            # In a loop for every generation
             print "\n----------------------"
             print "\nGeneration: %s of %s" % (g + 1, self.generations)
             for r in range(self.rounds_per_generation):
+                # Loop to repeat tournament for each generation
                 print "\tRound: %s of %s" % (r + 1, self.rounds_per_generation)
-                # Reset all utilities
+                # Reset all utilities before starting a tournament
                 for k in range(self.number_of_agents):
                     self.row_agents[k].utility = 0
                     self.col_agents[k].utility = 0
@@ -155,25 +167,40 @@ class ABM():
             self.reproduce()
 
             if plot:
+                # Update the plot if plot is True
                 for k in range(len(self.row_strategies)):
                     c = cm.spring((k + 1) / len(self.row_strategies))
                     plt.plot(self.row_history[k], color=c)
                 for k in range(len(self.col_strategies)):
                     c = cm.winter((k + 1) / len(self.col_strategies))
-                    plt.plot(self.col_history[k], color=c)
+                    plt.plot(self.col_history[k], "--", color=c)
                 plt.draw()
         if plot:
+            # Block plot at end of simulation
             plt.show(block=True)
 
-#        self.row_distribution = return_current_strategy_distribution(self.row_agents, self.row_strategies)
-#        self.col_distribution = return_current_strategy_distribution(self.col_agents, self.col_strategies)
 
+if __name__ == '__main__':
+    # Various Parameter for Rock Paper Scissors
+    # test = ABM(number_of_agents=1000, generations=100, rounds_per_generation=5, death_rate=.1, mutation_rate=.67, row_matrix=[[0, -1, 1], [1, 0, -1], [-1, 1, 0]], col_matrix=[[0, 1, -1], [-1, 0, 1], [1, -1, 0]])
+    # test = ABM(number_of_agents=1000, generations=100, rounds_per_generation=5, death_rate=.001, mutation_rate=.67, row_matrix=[[0, -1, 1], [1, 0, -1], [-1, 1, 0]], col_matrix=[[0, 1, -1], [-1, 0, 1], [1, -1, 0]], initial_strategy_distribution=[{0: 10, 1: 90, 2: 0}, {0: 50, 1: 0, 2: 50}])
+    # test = ABM(number_of_agents=1000, generations=100, rounds_per_generation=5, death_rate=.01, mutation_rate=.67, row_matrix=[[0, -1, 1], [1, 0, -1], [-1, 1, 0]], col_matrix=[[0, 1, -1], [-1, 0, 1], [1, -1, 0]], initial_strategy_distribution=[{0: 10, 1: 90, 2: 0}, {0: 50, 1: 0, 2: 50}])
+    # test = ABM(number_of_agents=1000, generations=100, rounds_per_generation=5, death_rate=.05, mutation_rate=.67, row_matrix=[[0, -1, 1], [1, 0, -1], [-1, 1, 0]], col_matrix=[[0, 1, -1], [-1, 0, 1], [1, -1, 0]], initial_strategy_distribution=[{0: 10, 1: 90, 2: 0}, {0: 50, 1: 0, 2: 50}])
+    # test = ABM(number_of_agents=1000, generations=100, rounds_per_generation=5, death_rate=.1, mutation_rate=.67, row_matrix=[[0, -1, 1], [1, 0, -1], [-1, 1, 0]], col_matrix=[[0, 1, -1], [-1, 0, 1], [1, -1, 0]], initial_strategy_distribution=[{0: 10, 1: 90, 2: 0}, {0: 50, 1: 0, 2: 50}])
+    # test = ABM(number_of_agents=1000, generations=100, rounds_per_generation=5, death_rate=.1, mutation_rate=.1, row_matrix=[[0, -1, 1], [1, 0, -1], [-1, 1, 0]], col_matrix=[[0, 1, -1], [-1, 0, 1], [1, -1, 0]], initial_strategy_distribution=[{0: 10, 1: 90, 2: 0}, {0: 50, 1: 0, 2: 50}])
+    # test = ABM(number_of_agents=1000, generations=100, rounds_per_generation=5, death_rate=.8, mutation_rate=.1, row_matrix=[[0, -1, 1], [1, 0, -1], [-1, 1, 0]], col_matrix=[[0, 1, -1], [-1, 0, 1], [1, -1, 0]], initial_strategy_distribution=[{0: 10, 1: 90, 2: 0}, {0: 50, 1: 0, 2: 50}])
+    # test = ABM(number_of_agents=1000, generations=100, rounds_per_generation=5, death_rate=.8, mutation_rate=.67, row_matrix=[[0, -1, 1], [1, 0, -1], [-1, 1, 0]], col_matrix=[[0, 1, -1], [-1, 0, 1], [1, -1, 0]], initial_strategy_distribution=[{0: 10, 1: 90, 2: 0}, {0: 50, 1: 0, 2: 50}])
 
-test = ABM(1000, 1000, 5, .001, .2, [[2, -1], [-1, 1]], [[-1, 1], [1, -1]])
-#test = ABM(1000, 1000, 5, .1, .3, [[8, 10], [10, 6]], [[-8, -10], [-10, -2]])
-#test = ABM(100, 10, 10, .3, .05, [[4, 0], [5, 2]], [[4, 5], [0, 2]])
-#test = ABM(10000, 1000, 10, .0001, .02, [[4, 2], [1, 3]], [[3, 1], [2, 10]])
-#test = ABM(1000, 100, 5, .05, .1, [[10, 1], [1, 2]], [[2, 1], [1, 10]])
-#test = ABM(100, 10000, 5, .01, .1, [[0, -1, 1], [1, 0, -1], [-1, 1, 0]], [[0, 1, -1], [-1, 0, 1], [1, -1, 0]])
-#test = ABM(100, 1000, 3, .25, .1, [[3, -1, -3], [-3, 3, -1], [-4, -3, 3]], [[-3, 1, 3], [3, -3, 1], [4, 3, -3]])
-test.simulate(True)
+    # Prisoner's Dilemma
+    # test = ABM(number_of_agents=1000, generations=100, rounds_per_generation=5, death_rate=.1, mutation_rate=.67, row_matrix=[[4, 0], [5, 2]], col_matrix=[[4, 5], [0, 2]])
+    # test = ABM(number_of_agents=1000, generations=100, rounds_per_generation=5, death_rate=.01, mutation_rate=.67, row_matrix=[[4, 0], [5, 2]], col_matrix=[[4, 5], [0, 2]])
+    # test = ABM(number_of_agents=1000, generations=100, rounds_per_generation=5, death_rate=.1, mutation_rate=.2, row_matrix=[[4, 0], [5, 2]], col_matrix=[[4, 5], [0, 2]])
+    # test = ABM(number_of_agents=1000, generations=100, rounds_per_generation=5, death_rate=.1, mutation_rate=.2, row_matrix=[[4, 0], [5, 2]], col_matrix=[[4, 5], [0, 2]], initial_strategy_distribution=[{0: 0, 1: 100}, {0: 0, 1: 100}])
+    # test = ABM(number_of_agents=1000, generations=100, rounds_per_generation=5, death_rate=.1, mutation_rate=.2, row_matrix=[[4, 0], [5, 2]], col_matrix=[[4, 5], [0, 2]], initial_strategy_distribution=[{0: 0, 1: 100}, {0: 100, 1: 0}])
+
+    # Battle of the sexes
+    # test = ABM(number_of_agents=1000, generations=100, rounds_per_generation=5, death_rate=.1, mutation_rate=.25, row_matrix=[[4, 1], [0, 2]], col_matrix=[[2, 1], [0, 4]])
+    # test = ABM(number_of_agents=1000, generations=100, rounds_per_generation=5, death_rate=.1, mutation_rate=.25, row_matrix=[[4, 1], [0, 2]], col_matrix=[[2, 1], [0, 4]], initial_strategy_distribution=[{0: 80, 1: 20}, {0: 20, 1: 80}])
+    # test = ABM(number_of_agents=1000, generations=100, rounds_per_generation=5, death_rate=.1, mutation_rate=.25, row_matrix=[[4, 1], [0, 2]], col_matrix=[[2, 1], [0, 4]], initial_strategy_distribution=[{0: 100, 1: 0}, {0: 0, 1: 100}])
+    test = ABM(number_of_agents=1000, generations=100, rounds_per_generation=5, death_rate=.1, mutation_rate=.25, row_matrix=[[4, 1], [0, 2]], col_matrix=[[2, 1], [0, 4]], initial_strategy_distribution=[{0: 100, 1: 0}, {0: 100, 1: 0}])
+    test.simulate(plot=True)
