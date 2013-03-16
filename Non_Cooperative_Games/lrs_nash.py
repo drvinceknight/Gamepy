@@ -1,6 +1,7 @@
 """
 A library to use the lrs Nash library. This is currently done in a pretty poor way.
 """
+from __future__ import division
 from subprocess import Popen, PIPE, call
 from os import remove
 
@@ -12,6 +13,17 @@ def multiple_equilibria_clean(l):
             r.append([e, l[-1]])
         return r
     return [l]
+
+
+class Normal_Form_Equilibria:
+    """
+    A class for an equilibria of a normal form game
+    """
+    def __init__(self, lrs_output):
+        self.row_strategy_distribution = lrs_output[1][1:-1]
+        self.col_strategy_distribution = lrs_output[0][1:-1]
+        self.row_utility = lrs_output[0][-1]
+        self.col_utility = lrs_output[1][-1]
 
 
 class Normal_Form_Game:
@@ -45,26 +57,28 @@ class Normal_Form_Game:
         # Solve game using lrs:
         process = Popen(["lrslib-043/nash", "game1", "game2"], stdout=PIPE)
         # Save output
-        self.lrs_output = [row for row in process.stdout]
+        lrs_output = [row for row in process.stdout]
         # Delete lrs files
         for f in ["game", "game1", "game2"]:
             remove(f)
         # Find number of equilibria
-        self.number_of_equilibria = eval([row for row in self.lrs_output if "*Number of equilibria found:" in row][0].split()[-1])
-        self.lrs_output = [[eval(e) for e in row[:-2].split('  ')] for row in self.lrs_output[7:-7] if row != '\n']
-        print self.lrs_output
+        self.number_of_equilibria = eval([row for row in lrs_output if "*Number of equilibria found:" in row][0].split()[-1])
+        lrs_output = [[eval(e) for e in row[:-2].split('  ')] for row in lrs_output[7:-7] if row != '\n']
         self.equilibria = []
-        while self.lrs_output:
-            if len(self.lrs_output) > 1:
-                i = [row[0] for row in self.lrs_output].index(1)
+        while lrs_output:
+            if len(lrs_output) > 1:
+                i = [row[0] for row in lrs_output].index(1)
                 temp = []
-                for e in self.lrs_output[: i + 1]:
-                    temp.append(self.lrs_output.pop(0))
-                self.equilibria.append(multiple_equilibria_clean(temp))
+                for e in lrs_output[: i + 1]:
+                    temp.append(lrs_output.pop(0))
+                for e in multiple_equilibria_clean(temp):
+                    self.equilibria.append(Normal_Form_Equilibria(e))
 
 
-a = Normal_Form_Game([[1, 2], [3, 2]], [[0, 1], [1, 0]])
-a.solve()
-print a.number_of_equilibria
-print a.lrs_output
-print a.equilibria
+if __name__ == '__main__':
+    a = Normal_Form_Game([[3, 3], [2, 5], [0, 6]], [[3, 2], [2, 6], [3, 1]])
+    a.solve()
+    for e in a.equilibria:
+        print e
+        print "\tRow player plays:", e.row_strategy_distribution, "with utility:", e.row_utility
+        print "\tCol player plays:", e.col_strategy_distribution, "with utility:", e.col_utility
