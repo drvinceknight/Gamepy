@@ -53,9 +53,9 @@ class Normal_Form_Game:
         game.close()
 
         # Write H representations for each player (really should automate this)
-        call(["lrslib-043/setupnash", "game", "game1", "game2"], stdout=PIPE)
+        call(["setupnash", "game", "game1", "game2"], stdout=PIPE)
         # Solve game using lrs:
-        process = Popen(["lrslib-043/nash", "game1", "game2"], stdout=PIPE)
+        process = Popen(["nash", "game1", "game2"], stdout=PIPE)
         # Save output
         lrs_output = [row for row in process.stdout]
         # Delete lrs files
