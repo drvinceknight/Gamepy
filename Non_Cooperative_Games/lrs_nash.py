@@ -58,20 +58,25 @@ class Normal_Form_Game:
         process = Popen(["nash", "game1", "game2"], stdout=PIPE)
         # Save output
         lrs_output = [row for row in process.stdout]
-        # Delete lrs files
+        # Delete lrs files, need to do this without writing hard files
         for f in ["game", "game1", "game2"]:
             remove(f)
         # Find number of equilibria
         self.number_of_equilibria = eval([row for row in lrs_output if "*Number of equilibria found:" in row][0].split()[-1])
+        # This obtains pairs of equilibria as output by lrs. Can be improved.
         lrs_output = [[eval(e) for e in row[:-2].split('  ')] for row in lrs_output[7:-7] if row != '\n']
+        # Create empty list for equilibria
         self.equilibria = []
         while lrs_output:
+            # Go through elements of output of lrs
             if len(lrs_output) > 1:
+                # If there is an element left
                 i = [row[0] for row in lrs_output].index(1)
-                temp = []
+                temp = []  # A temp list that will hold a portion of the lrs output
                 for e in lrs_output[: i + 1]:
                     temp.append(lrs_output.pop(0))
                 for e in multiple_equilibria_clean(temp):
+                    # Create the required Normal form equilibria objects
                     self.equilibria.append(Normal_Form_Equilibria(e))
 
 
