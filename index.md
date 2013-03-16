@@ -10,4 +10,4 @@ This contains some code for a growing number of game theoretical subjects (click
 - Matching Games:
     - Gale_Shapley.py (a library to solve matching games using the extended gale shapley algorithm)
 
-The code is all available on github and I'm sure can be improved a lot. I'll be continuing to work on this here and there when I have time.
+The code is all available on github and I'm sure can be improved a lot (for example the current communication with lrs is very clumsy). I'll be continuing to work on this here and there when I have time.
