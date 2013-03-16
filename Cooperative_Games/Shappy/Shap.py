@@ -24,14 +24,6 @@ def characteristic_function_check(player_list,characteristic_function):
         if ",".join(e) not in characteristic_function:
             print "ERROR: characteristic_function domain does not match players."
             return False
-    for e in player_power_set:
-        e=",".join(e)
-        for b in player_power_set:
-            b=",".join(b)
-            if e in b:
-                if characteristic_function[e]>characteristic_function[b]:
-                    print "ERROR: game is not Monotone"
-                    return False
     return r
 
 def predecessors(player,player_permutation):
