@@ -2,7 +2,11 @@
 
 ## Shap.py
 
-Shap.py contains some code to calculate the shapley value for a cooperative game.
+Shap.py contains some code to calculate the shapley value for a cooperative game. Here's a video explaining the usage of the shapley value:
+
+<iframe width="560" height="315" src="http://www.youtube.com/embed/aThG4YAFErw" frameborder="0" allowfullscreen></iframe>
+
+(Note there is an error at 3:51)
 
 ## Usage
 

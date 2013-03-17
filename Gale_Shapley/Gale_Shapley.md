@@ -2,7 +2,9 @@
 
 ## Gale_Shapley.py
 
-Gale_Shapley contains some code to calculate a stable matching for the stable matching problem.
+Gale_Shapley contains some code to calculate a stable matching for the stable matching problem. Here's a great video describing the stable matching problem and the Gale Shapley algorithm:
+
+<iframe width="560" height="315" src="http://www.youtube.com/embed/w1leqkpDaRw" frameborder="0" allowfullscreen></iframe>
 
 The implementation in Gale_Shapley.py is actually the *extended Gale Shapley algorithm* a description of which can be found in introductory sections of [this paper](http://www.sciencedirect.com/science/article/pii/0166218X9200179P) by Steven Irving.
 

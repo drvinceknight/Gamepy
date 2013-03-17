@@ -4,6 +4,10 @@
 
 lrs_nash.py contains some code that is a basic wrapper for the `nash.c` and `setupnash.c` files that come with the **excellent** [lrs](http://cgm.cs.mcgill.ca/~avis/C/lrs.html) package which allows for the computation of Nash equilibria in 2 player normal form games. To use this program you need lrs on your machine, the download instructions are pretty good on the [lrs website](http://cgm.cs.mcgill.ca/~avis/C/lrs.html) but I'll include some further instructions at the end of this page.
 
+Here's a little video discussing mixed strategies in 2 player normal form games (in this I video actually use [sagemath](http://sagemath.org/) to solve some simple algebraic equations to obtain the equilibria):
+
+<iframe width="560" height="315" src="http://www.youtube.com/embed/poYucyX7-gE" frameborder="0" allowfullscreen></iframe>
+
 ## Usage
 
 Create a normal form game instance by passing two lists representing the bi matrices:
