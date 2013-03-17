@@ -2,8 +2,17 @@
 A library to use the lrs Nash library. This is currently done in a pretty poor way.
 """
 from __future__ import division
-from subprocess import Popen, PIPE, call
 from os import remove
+from subprocess import Popen, PIPE, call
+import random
+import string
+
+
+def id_generator(size=6, chars=string.ascii_uppercase + string.digits):
+    """
+    A function to generate random file names for physical files needed to communicate with lrs.
+    """
+    return ''.join(random.choice(chars) for x in range(size))
 
 
 def multiple_equilibria_clean(l):
@@ -41,7 +50,8 @@ class Normal_Form_Game:
         Method that write physical files so that lrs can be used to solve game.
         """
         # Write game file
-        game = open("game", "w")
+        file1 = id_generator(6)
+        game = open(file1, "w")
         game.write("%s %s\n" % (self.row_size, self.col_size))
         for i in self.row_matrix:
             game.write("\n")
@@ -53,13 +63,15 @@ class Normal_Form_Game:
         game.close()
 
         # Write H representations for each player (really should automate this)
-        call(["setupnash", "game", "game1", "game2"], stdout=PIPE)
+        file2 = id_generator(6)
+        file3 = id_generator(6)
+        call(["setupnash", file1, file2, file3], stdout=PIPE)
         # Solve game using lrs:
-        process = Popen(["nash", "game1", "game2"], stdout=PIPE)
+        process = Popen(["nash", file2, file3], stdout=PIPE)
         # Save output
         lrs_output = [row for row in process.stdout]
         # Delete lrs files, need to do this without writing hard files
-        for f in ["game", "game1", "game2"]:
+        for f in [file1, file2, file3]:
             remove(f)
         # Find number of equilibria
         self.number_of_equilibria = eval([row for row in lrs_output if "*Number of equilibria found:" in row][0].split()[-1])
