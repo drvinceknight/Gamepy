@@ -1,0 +1,53 @@
+# [Gamepy: some python code for game theory...](../index.html)
+
+## lrs_nash.py
+
+lrs_nash.py contains some code that is a basic wrapper for the `nash.c` and `setupnash.c` files that come with the **excellent** [lrs](http://cgm.cs.mcgill.ca/~avis/C/lrs.html) package which allows for the computation of Nash equilibria in 2 player normal form games. To use this program you need lrs on your machine, the download instructions are pretty good on the [lrs website](http://cgm.cs.mcgill.ca/~avis/C/lrs.html) but I'll include some further instructions at the end of this page.
+
+Here's a little video discussing mixed strategies in 2 player normal form games (in this I video actually use [sagemath](http://sagemath.org/) to solve some simple algebraic equations to obtain the equilibria):
+
+<iframe width="560" height="315" src="http://www.youtube.com/embed/poYucyX7-gE" frameborder="0" allowfullscreen></iframe>
+
+## Usage
+
+Create a normal form game instance by passing two lists representing the bi matrices:
+
+
+~~~~{.python}
+Normal_Form_Game(row_matrix=LIST, col_matrix=LIST)
+~~~~
+
+Here's an example:
+
+~~~~{.python}
+import lrs_nash
+row_matrix = [[3, 3], [2, 5], [0, 6]]
+col_matrix = [[3, 2], [2, 6], [3, 1]]
+g = lrs_nash.Normal_Form_Game(row_matrix, col_matrix)
+~~~~
+
+To solve the game we use the `solve` method:
+
+~~~~{.python}
+g.solve()
+~~~~
+
+The attribute `equilibria` now contains all the equilibria objects which have the following attributes:
+
+- `row_strategy_distribution`
+- `col_strtegy_distribution`
+- `row_utility`
+- `col_utility`
+
+So one way of view all the equilibria would be the following:
+
+~~~~{.python}
+for e in g.equilibria:
+    print e
+    print "\tRow player plays:", e.row_strategy_distribution, "with utility:", e.row_utility
+    print "\tCol player plays:", e.col_strategy_distribution, "with utility:", e.col_utility
+~~~~
+
+## Comments and issues
+
+### Installing lrs

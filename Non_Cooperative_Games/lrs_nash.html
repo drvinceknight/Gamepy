@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; background-color: #f8f8f8; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+pre, code { background-color: #f8f8f8; }
+code > span.kw { color: #204a87; font-weight: bold; }
+code > span.dt { color: #204a87; }
+code > span.dv { color: #0000cf; }
+code > span.bn { color: #0000cf; }
+code > span.fl { color: #0000cf; }
+code > span.ch { color: #4e9a06; }
+code > span.st { color: #4e9a06; }
+code > span.co { color: #8f5902; font-style: italic; }
+code > span.ot { color: #8f5902; }
+code > span.al { color: #ef2929; }
+code > span.fu { color: #000000; }
+code > span.er { font-weight: bold; }
+  </style>
+</head>
+<body>
+<h1 id="gamepy-some-python-code-for-game-theory..."><a href="../index.html">Gamepy: some python code for game theory...</a></h1>
+<h2 id="lrs_nash.py">lrs_nash.py</h2>
+<p>lrs_nash.py contains some code that is a basic wrapper for the <code>nash.c</code> and <code>setupnash.c</code> files that come with the <strong>excellent</strong> <a href="http://cgm.cs.mcgill.ca/~avis/C/lrs.html">lrs</a> package which allows for the computation of Nash equilibria in 2 player normal form games. To use this program you need lrs on your machine, the download instructions are pretty good on the <a href="http://cgm.cs.mcgill.ca/~avis/C/lrs.html">lrs website</a> but I'll include some further instructions at the end of this page.</p>
+<p>Here's a little video discussing mixed strategies in 2 player normal form games (in this I video actually use <a href="http://sagemath.org/">sagemath</a> to solve some simple algebraic equations to obtain the equilibria):</p>
+<iframe width="560" height="315" src="http://www.youtube.com/embed/poYucyX7-gE" frameborder="0" allowfullscreen></iframe>
+
+<h2 id="usage">Usage</h2>
+<p>Create a normal form game instance by passing two lists representing the bi matrices:</p>
+<pre class="sourceCode python"><code class="sourceCode python">Normal_Form_Game(row_matrix=LIST, col_matrix=LIST)</code></pre>
+<p>Here's an example:</p>
+<pre class="sourceCode python"><code class="sourceCode python"><span class="ch">import</span> lrs_nash
+row_matrix = [[<span class="dv">3</span>, <span class="dv">3</span>], [<span class="dv">2</span>, <span class="dv">5</span>], [<span class="dv">0</span>, <span class="dv">6</span>]]
+col_matrix = [[<span class="dv">3</span>, <span class="dv">2</span>], [<span class="dv">2</span>, <span class="dv">6</span>], [<span class="dv">3</span>, <span class="dv">1</span>]]
+g = lrs_nash.Normal_Form_Game(row_matrix, col_matrix)</code></pre>
+<p>To solve the game we use the <code>solve</code> method:</p>
+<pre class="sourceCode python"><code class="sourceCode python">g.solve()</code></pre>
+<p>The attribute <code>equilibria</code> now contains all the equilibria objects which have the following attributes:</p>
+<ul>
+<li><code>row_strategy_distribution</code></li>
+<li><code>col_strtegy_distribution</code></li>
+<li><code>row_utility</code></li>
+<li><code>col_utility</code></li>
+</ul>
+<p>So one way of view all the equilibria would be the following:</p>
+<pre class="sourceCode python"><code class="sourceCode python"><span class="kw">for</span> e in g.equilibria:
+    <span class="kw">print</span> e
+    <span class="kw">print</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">Row player plays:&quot;</span>, e.row_strategy_distribution, <span class="st">&quot;with utility:&quot;</span>, e.row_utility
+    <span class="kw">print</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">Col player plays:&quot;</span>, e.col_strategy_distribution, <span class="st">&quot;with utility:&quot;</span>, e.col_utility</code></pre>
+<h2 id="comments-and-issues">Comments and issues</h2>
+<h3 id="installing-lrs">Installing lrs</h3>
+</body>
+</html>
