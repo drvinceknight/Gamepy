@@ -103,3 +103,7 @@ Inverted stable matching:
 ## Comments and issues
 
 I have almost implemented the SUPER and STRONG algorithms of [Irving's paper](http://www.sciencedirect.com/science/article/pii/0166218X9200179P) which return super and strong matchings (if they exist) for matching games where indifference is allowed.
+
+## Github repo
+
+The github repo for Gale_Shapley.py can be found [here](https://github.com/drvinceknight/Gamepy/tree/master/Gale_Shapley).

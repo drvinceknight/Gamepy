@@ -130,3 +130,7 @@ The output plot clearly shows how the populations begin by cooperating but quick
 Note that to use the plot ability of the simulate method you need to have [matplotlib](http://matplotlib.org/) installed.
 
 Choice of parameters is important in these sorts of experiments so be sure to play around with a variety of them. From a theoretical point of view note that an Evolutionary Stable Strategy does not necessarily imply Nash equilibria.
+
+## Github repo
+
+The github repo for Abm.py can be found [here](https://github.com/drvinceknight/Gamepy/tree/master/Shappy).

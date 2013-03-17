@@ -98,3 +98,7 @@ cp * /usr/local/bin
 ~~~~
 
 **It does not matter where you put the lrs library files but for lrs_nash.py to work you need `nash` and `setupnash` to be in a directory that is in your PATH.**
+
+## Github repo
+
+The github repo for lrs_nash.py can be found [here](https://github.com/drvinceknight/Gamepy/tree/master/lrs_nash).

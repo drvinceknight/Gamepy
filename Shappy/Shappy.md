@@ -40,3 +40,7 @@ which returns:
 ## Comments and issues
 
 Currently there is a check function that makes sure the characteristic function is valid (i.e. that the player list concurs).
+
+## Github repo
+
+The github repo for Shap.py can be found [here](https://github.com/drvinceknight/Gamepy/tree/master/Shappy).
