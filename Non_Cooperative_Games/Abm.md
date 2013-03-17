@@ -4,7 +4,7 @@
 
 Abm.py contains some code to run agent based simulations of normal form games. This allows for nice visualisations of emergent behaviour in game theoretical contexts. The pseudo code for the main procedure in this file is given below:
 
-~~~~{.pseudo}
+~~~~
 Create row agents corresponding to row strategies
 Create col agents corresponding to col strategies
 
