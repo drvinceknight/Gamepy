@@ -5,7 +5,7 @@ This contains some code for a growing number of game theoretical subjects (click
 - Cooperative Game Theory:
     - [Shap.py](./Cooperative_Games/Shappy.html) (a library to calculate the shapley value for a cooperative game)
 - Non Cooperative Game Theory:
-    - Abm.py (a library to simulate a population of strategies in an evolutionary context)
+    - [Abm.py](./Non_Cooperative_Games/Abm.html) (a library to simulate a population of strategies in an evolutionary context)
     - lrs_nash.py (a library that solves a normal form game using the lrs library)
 - Matching Games:
     - [Gale_Shapley.py](./Matching_Games/Gale_Shapley.html) (a library to solve matching games using the extended gale shapley algorithm)

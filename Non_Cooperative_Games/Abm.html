@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+</head>
+<body>
+<h1 id="gamepy-some-python-code-for-game-theory..."><a href="../index.html">Gamepy: some python code for game theory...</a></h1>
+<h2 id="abm.py">Abm.py</h2>
+<p>Abm.py contains some code to run agent based simulations of normal form games. This allows for nice visualisations of emergent behaviour in game theoretical contexts. The pseudo code for the main procedure in this file is given below:</p>
+<pre class="pseudo"><code>Create row agents corresponding to row strategies
+Create col agents corresponding to col strategies
+
+for every generation:
+    for every round of tournament:
+        randomly dual row agents against col agents
+
+    remove week agents
+    reproduce strong agents (allowing for mutation)</code></pre>
+<p>A great explanation of these sort of things is available in <a href="http://goo.gl/jDvY7">this book</a> by Herbert Gintis.</p>
+<h2 id="usage">Usage</h2>
+</body>
+</html>
