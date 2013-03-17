@@ -1,18 +1,42 @@
-Python code to obtain Shapley value of a cooperative game.
+# [Gamepy: some python code for game theory...](../index.html)
 
-The library defines a class: 'Coop_Game' which has a 'shapley' method that returns the Shapley value. The code is currently written so that it only takes monotone cooperative games as valid (this can be easily changed by commenting out correct code in 'characteristic_function_check' function).
+## Shap.py
 
-# License Information #
+Shap.py contains some code to calculate the shapley value for a cooperative game. Here's a video explaining the usage of the shapley value:
 
-This work is licensed under a [Creative Commons Attribution-ShareAlike 3.0](http://creativecommons.org/licenses/by-sa/3.0/us/) license.  You are free to:
+<iframe width="560" height="315" src="http://www.youtube.com/embed/aThG4YAFErw" frameborder="0" allowfullscreen></iframe>
 
-* Share: copy, distribute, and transmit the work,
-* Remix: adapt the work
+(Note there is an error at 3:51)
 
-Under the following conditions:
+## Usage
 
-* Attribution: You must attribute the work in the manner specified by the author or licensor (but not in any way that suggests that they endorse you or your use of the work).
-* Share Alike: If you alter, transform, or build upon this work, you may distribute the resulting work only under the same or similar license to this one.
+Create a cooperative game instance by passing a dictionary stating the coalition values:
 
-When attributing this work, please include me.
+~~~~{.python}
+Coop_Game(player_list=LIST, characteristic_function=DICTIONARY)
+~~~~
 
+Here's an example:
+
+~~~~{.python}
+import Shap
+player_list = ['A', 'B', 'C']
+coalition_dictionary = {'A' : 3, 'B' : 4, 'C' : 3, 'A,B' : 4, 'B,C' : 4, 'A,C': 6, 'A,B,C' : 10}
+g = Shap.Coop_Game(player_list, coalition_dictionary)
+~~~~
+
+We obtain the Shapley value using the `shapley` method:
+
+~~~~{.python}
+g.shapley()
+~~~~
+
+which returns:
+
+~~~~{.python}
+{'A': 3.5, 'C': 3.5, 'B': 3.0}
+~~~~
+
+## Comments and issues
+
+Currently there is a check function that makes sure the characteristic function is valid (i.e. that the player list concurs).
