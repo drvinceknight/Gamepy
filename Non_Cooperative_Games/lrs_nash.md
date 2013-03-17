@@ -48,6 +48,22 @@ for e in g.equilibria:
     print "\tCol player plays:", e.col_strategy_distribution, "with utility:", e.col_utility
 ~~~~
 
+The output of which would be:
+
+~~~~{.python}
+<__main__.Normal_Form_Equilibria instance at 0x1004c7830>
+    Row player plays: [0.8, 0.2, 0] with utility: 3
+    Col player plays: [0.6666666666666666, 0.3333333333333333] with utility: 2.8
+<__main__.Normal_Form_Equilibria instance at 0x1004c7878>
+    Row player plays: [0, 0.3333333333333333, 0.6666666666666666] with utility: 4
+    Col player plays: [0.3333333333333333, 0.6666666666666666] with utility: 2.66666666667
+<__main__.Normal_Form_Equilibria instance at 0x1004c78c0>
+    Row player plays: [1, 0, 0] with utility: 3
+    Col player plays: [1, 0] with utility: 3
+~~~~
+
 ## Comments and issues
+
+This
 
 ### Installing lrs
