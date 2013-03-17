@@ -1,4 +1,4 @@
-# [Gamepy: some python code for game theory...](../index.html)
+# Gamepy: some python code for game theory...
 
 ## Abm.py
 

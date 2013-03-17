@@ -8,6 +8,10 @@ Abm.py contains some code to run agent based simulations of normal form games. T
 
 A great explanation of these sorts of things is available in [this book](http://goo.gl/jDvY7) by Herbert Gintis.
 
+Here's a video demonstrating this package:
+
+<iframe width="420" height="315" src="http://www.youtube.com/embed/Tz-lZy0AKRI" frameborder="0" allowfullscreen></iframe>
+
 ## Usage
 Create an agent based model instance by passing a variety of arguments:
 
