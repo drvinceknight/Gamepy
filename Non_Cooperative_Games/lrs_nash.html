@@ -66,6 +66,28 @@ g = lrs_nash.Normal_Form_Game(row_matrix, col_matrix)</code></pre>
     Row player plays: [<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>] <span class="kw">with</span> utility: <span class="dv">3</span>
     Col player plays: [<span class="dv">1</span>, <span class="dv">0</span>] <span class="kw">with</span> utility: <span class="dv">3</span></code></pre>
 <h2 id="comments-and-issues">Comments and issues</h2>
+<p>This program communicates with the lrs library through the writing of physical files. The names of those files are randomly chosen and they are deleted when the game is solved. An immediate improvement of the code would be bypass the writing of physical files. As soon as I learn a bit more about c and the subprocess python module I'll fix that.</p>
 <h3 id="installing-lrs">Installing lrs</h3>
+<p>Downloading and installing the lrs library is very straightforward (steps 1-5 are in fact the same as those shown <a href="http://cgm.cs.mcgill.ca/~avis/C/lrslib/USERGUIDE.html#Installation%20Section">here</a>):</p>
+<ol style="list-style-type: decimal">
+<li>Go to the <a href="http://cgm.cs.mcgill.ca/~avis/C/lrslib/">lrs download page</a></li>
+<li>Download the <code>tar.gz</code> file.</li>
+<li>Navigate to the file and unpack it (we'll assume it's <code>lrslib-034.tar.gz</code> but the numbers might vary):</li>
+</ol>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">gunzip</span> lrslib-043.tar.gz
+<span class="kw">tar</span> xvf lrslib-043.tar</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>Go to the newly created directory:</li>
+</ol>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">cd</span> lrslib-042</code></pre>
+<ol start="5" style="list-style-type: decimal">
+<li>Make all the binaries:</li>
+</ol>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">make</span> all</code></pre>
+<ol start="6" style="list-style-type: decimal">
+<li>Copy all those files to a directory that is in your PATH (so that python can talk to it). I choose to put them in <code>/usr/local/bin</code>.</li>
+</ol>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">cp</span> * /usr/local/bin</code></pre>
+<p><strong>It does not matter where you put the lrs library files but for lrs_nash.py to work you need <code>nash</code> and <code>setupnash</code> to be in a directory that is in your PATH.</strong></p>
 </body>
 </html>

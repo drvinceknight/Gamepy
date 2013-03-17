@@ -64,6 +64,37 @@ The output of which would be:
 
 ## Comments and issues
 
-This
+This program communicates with the lrs library through the writing of physical files. The names of those files are randomly chosen and they are deleted when the game is solved. An immediate improvement of the code would be bypass the writing of physical files. As soon as I learn a bit more about c and the subprocess python module I'll fix that.
 
 ### Installing lrs
+
+Downloading and installing the lrs library is very straightforward (steps 1-5 are in fact the same as those shown [here](http://cgm.cs.mcgill.ca/~avis/C/lrslib/USERGUIDE.html#Installation%20Section)):
+
+1. Go to the [lrs download page](http://cgm.cs.mcgill.ca/~avis/C/lrslib/)
+2. Download the `tar.gz` file.
+3. Navigate to the file and unpack it (we'll assume it's `lrslib-034.tar.gz` but the numbers might vary):
+
+~~~~{.bash}
+gunzip lrslib-043.tar.gz
+tar xvf lrslib-043.tar
+~~~~
+
+4. Go to the newly created directory:
+
+~~~~{.bash}
+cd lrslib-042
+~~~~
+
+5. Make all the binaries:
+
+~~~~{.bash}
+make all
+~~~~
+
+6. Copy all those files to a directory that is in your PATH (so that python can talk to it). I choose to put them in `/usr/local/bin`.
+
+~~~~{.bash}
+cp * /usr/local/bin
+~~~~
+
+**It does not matter where you put the lrs library files but for lrs_nash.py to work you need `nash` and `setupnash` to be in a directory that is in your PATH.**
