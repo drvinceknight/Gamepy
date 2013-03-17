@@ -30,16 +30,10 @@ code > span.er { font-weight: bold; }
 <h1 id="gamepy-some-python-code-for-game-theory..."><a href="../index.html">Gamepy: some python code for game theory...</a></h1>
 <h2 id="abm.py">Abm.py</h2>
 <p>Abm.py contains some code to run agent based simulations of normal form games. This allows for nice visualisations of emergent behaviour in game theoretical contexts. The pseudo code for the main procedure in this file is given below:</p>
-<pre><code>Create row agents corresponding to row strategies
-Create col agents corresponding to col strategies
-
-for every generation:
-    for every round of tournament:
-        randomly dual row agents against col agents
-
-    remove week agents
-    reproduce strong agents (allowing for mutation)</code></pre>
-<p>A great explanation of these sort of things is available in <a href="http://goo.gl/jDvY7">this book</a> by Herbert Gintis.</p>
+<div class="figure">
+<img src="images/Abm_Algorithm.png" /><p class="caption"></p>
+</div>
+<p>A great explanation of these sorts of things is available in <a href="http://goo.gl/jDvY7">this book</a> by Herbert Gintis.</p>
 <h2 id="usage">Usage</h2>
 <p>Create an agent based model instance by passing a variety of arguments:</p>
 <pre class="sourceCode python"><code class="sourceCode python">ABM(number_of_agents=INT, generations=INT, rounds_per_generation=INT, death_rate=FLOAT, mutation_rate=FLOAT,

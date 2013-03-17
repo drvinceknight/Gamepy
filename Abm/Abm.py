@@ -66,7 +66,7 @@ class ABM():
         self.number_of_deaths_per_generation = int(number_of_agents * death_rate)
         self.mutation_rate = mutation_rate
         self.row_strategies = range(len(row_matrix))
-        self.col_strategies = range(len(col_matrix))
+        self.col_strategies = range(len(col_matrix[0]))
         self.row_matrix = row_matrix
         self.col_matrix = col_matrix
         if not initial_strategy_distribution:
