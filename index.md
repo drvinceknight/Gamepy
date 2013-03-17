@@ -1,9 +1,9 @@
-# Gamepy: some python code for game theory...
+# [Gamepy: some python code for game theory...](./index.html)
 
 This contains some code for a growing number of game theoretical subjects (clicking on each of the packages goes to some short documentation as well as a link to the code):
 
 - Cooperative Game Theory:
-    - Shap.py (a library to calculate the shapley value for a cooperative game)
+    - [Shap.py](./Cooperative_Games/Shappy.html) (a library to calculate the shapley value for a cooperative game)
 - Non Cooperative Game Theory:
     - Abm.py (a library to simulate a population of strategies in an evolutionary context)
     - lrs_nash.py (a library that solves a normal form game using the lrs library)
