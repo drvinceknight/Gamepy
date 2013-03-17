@@ -1,12 +1,3 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="Content-Style-Type" content="text/css" />
-  <meta name="generator" content="pandoc" />
-  <title></title>
-</head>
-<body>
 <h1 id="gamepy-some-python-code-for-game-theory..."><a href="../index.html">Gamepy: some python code for game theory...</a></h1>
 <h2 id="abm.py">Abm.py</h2>
 <p>Abm.py contains some code to run agent based simulations of normal form games. This allows for nice visualisations of emergent behaviour in game theoretical contexts. The pseudo code for the main procedure in this file is given below:</p>
@@ -21,5 +12,90 @@ for every generation:
     reproduce strong agents (allowing for mutation)</code></pre>
 <p>A great explanation of these sort of things is available in <a href="http://goo.gl/jDvY7">this book</a> by Herbert Gintis.</p>
 <h2 id="usage">Usage</h2>
-</body>
-</html>
+<p>Create an agent based model instance by passing a variety of arguments:</p>
+<pre class="sourceCode python"><code class="sourceCode python">ABM(number_of_agents=INT, generations=INT, rounds_per_generation=INT, death_rate=FLOAT, mutation_rate=FLOAT,
+row_matrix=LIST, col_matrix=LIST, [initial_strategy_distribution=LIST])</code></pre>
+<p>Here is an example (taking a look at the Prisoner's Dilemma):</p>
+<pre class="sourceCode python"><code class="sourceCode python"><span class="ch">import</span> Abm
+number_of_agents = <span class="dv">1000</span>
+generations = <span class="dv">100</span>
+rounds_per_generation = <span class="dv">5</span>
+death_rate = .<span class="dv">1</span>
+mutation_rate = .<span class="dv">2</span>
+row_matrix = [[<span class="dv">4</span>, <span class="dv">0</span>], [<span class="dv">5</span>, <span class="dv">2</span>]]
+col_matrix = [[<span class="dv">4</span>, <span class="dv">5</span>], [<span class="dv">0</span>, <span class="dv">2</span>]]
+
+g = Abm.ABM(number_of_agents, generations, rounds_per_generation, death_rate, mutation_rate, row_matrix, col_matrix)</code></pre>
+<p>We run the simulation using the <code>simulate</code> method:</p>
+<pre class="sourceCode python"><code class="sourceCode python">g.simulate()</code></pre>
+<p>Here's some of the output which shows the first and last two generations:</p>
+<pre class="sourceCode bash"><code class="sourceCode bash">----------------------
+
+Generation: 1 of 100
+    Round: 1 of 5
+    Round: 2 of 5
+    Round: 3 of 5
+    Round: 4 of 5
+    Round: 5 of 5
+
+Row players strategy distribution:
+    [0.506, 0.494]
+
+Col players strategy distribution:
+    [0.481, 0.519]
+
+----------------------
+
+...
+
+----------------------
+
+Generation: 99 of 100
+    Round: 1 of 5
+    Round: 2 of 5
+    Round: 3 of 5
+    Round: 4 of 5
+    Round: 5 of 5
+
+Row players strategy distribution:
+    [0.027, 0.973]
+
+Col players strategy distribution:
+    [0.019, 0.981]
+
+----------------------
+
+Generation: 100 of 100
+    Round: 1 of 5
+    Round: 2 of 5
+    Round: 3 of 5
+    Round: 4 of 5
+    Round: 5 of 5
+
+Row players strategy distribution:
+    [0.016, 0.984]
+
+Col players strategy distribution:
+    [0.02, 0.98]</code></pre>
+<p>We see that the population is tending to the &quot;Defect&quot; strategy (as expected).</p>
+<p>If the user has the excellent python plotting package <a href="http://matplotlib.org/">matplotlib</a> the simulation can be run with dynamic plotting (ie updates as the simulation is run):</p>
+<pre class="sourceCode python"><code class="sourceCode python">g.simulate(plot=<span class="ot">True</span>)</code></pre>
+<p>The plot is shown here:</p>
+<div class="figure">
+<img src="images/abm_plot.png" /><p class="caption"></p>
+</div>
+<p>We see that the populations started uniformly distributed amongst the strategies. We can however pass an initial distribution to the ABM class:</p>
+<pre class="sourceCode python"><code class="sourceCode python">number_of_agents = <span class="dv">1000</span>
+generations = <span class="dv">100</span>
+rounds_per_generation = <span class="dv">5</span>
+death_rate = .<span class="dv">1</span>
+mutation_rate = .<span class="dv">2</span>
+row_matrix = [[<span class="dv">4</span>, <span class="dv">0</span>], [<span class="dv">5</span>, <span class="dv">2</span>]]
+col_matrix = [[<span class="dv">4</span>, <span class="dv">5</span>], [<span class="dv">0</span>, <span class="dv">2</span>]]
+initial_distribution = [{<span class="dv">0</span>: <span class="dv">100</span>, <span class="dv">1</span>: <span class="dv">0</span>}, {<span class="dv">0</span>:<span class="dv">100</span>, <span class="dv">1</span>:<span class="dv">0</span>}]
+
+g = Abm.ABM(number_of_agents, generations, rounds_per_generation, death_rate, mutation_rate, row_matrix, col_matrix, initial_distribution)</code></pre>
+<p>The output plot clearly shows how the populations begin by cooperating but quickly converge to defecting:</p>
+<div class="figure">
+<img src="images/abm_plot_1.png" /><p class="caption"></p>
+</div>
