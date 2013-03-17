@@ -10,7 +10,13 @@ This contains some code for a growing number of game theoretical subjects (click
 - Matching Games:
     - [Gale_Shapley.py](./Gale_Shapley/Gale_Shapley.html) (a library to solve matching games using the extended gale shapley algorithm)
 
-The code is all available on github and I'm sure can be improved a lot (for example the current communication with lrs is very clumsy). I'll be continuing to work on this here and there when I have time.
+The code is all available on [github](https://github.com/drvinceknight/Gamepy) and I'm sure can be improved a lot (for example the current communication with lrs is very clumsy). I'll be continuing to work on this here and there when I have time and would eventually like to package it in to the awesome [sage](http://sagemath.org/).
+
+# Contact Information
+
+- My github repos can be found [here](https://github.com/drvinceknight);
+- My personal website is available [here](www.vincent-knight.com);
+- My G+ profile is [here](https://plus.google.com/110464871801965858778/posts).
 
 # License Information
 
