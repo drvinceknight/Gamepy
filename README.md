@@ -9,7 +9,7 @@ This contains some code for a growing number of game theoretical subjects. At th
 
 # Website
 
-I've posted some user docs and videos about some of the game theory on [drvinceknight.github.com/Gamepy](drvinceknight.github.com/Gamepy).
+I've posted some user docs and videos about some of the game theory on [drvinceknight.github.com/Gamepy](http://drvinceknight.github.com/Gamepy/).
 
 # License Information
 
