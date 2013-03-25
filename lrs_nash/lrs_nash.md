@@ -82,7 +82,7 @@ tar xvf lrslib-043.tar
 4. Go to the newly created directory:
 
 ~~~~{.bash}
-cd lrslib-042
+cd lrslib-043
 ~~~~
 
 5. Make all the binaries:
