@@ -1,15 +1,27 @@
-# Gamepy: some python code for game theory...
+# PLEASE DO NOT USE THIS REPOSITORY
 
-This contains some code for a growing number of game theoretical subjects. At the moment there are 4 pieces of code:
+It is being kept up for posterity but the code is actually quite poor (it all
+works). I have noticed a few people forking it but please do not (although by
+all means make use of the code if you'd like to).
 
-- Shap.py (a library to calculate the shapley value for a cooperative game)
-- Abm.py (a library to simulate a population of strategies in an evolutionary context)
-- lrs_nash.py (a library that solves a normal form game using the [lrs](http://cgm.cs.mcgill.ca/~avis/C/lrs.html) library)
-- Gale_Shapley.py (a library to solve matching games using the extended gale shapley algorithm)
+There are a variety of better alternatives:
 
-# Website
+- Normal Form Games:
+    - [Gambit](http://gambit.sourceforge.net/)
+    - [Sagemath](http://vknight.org/unpeudemath/code/2014/12/10/sneak-preview-of-game-theory-in-sage-3-of-3/)
+- Shapley Value calculation:
+  [Sagemath](http://vknight.org/unpeudemath/code/2014/08/01/a-sneak-preview-of-game-theory-in-sage-1-of-3/)
+- Gale Shapley algorithms:
+  [Sagemath](http://vknight.org/unpeudemath/code/2014/08/27/sneak-preview-of-game-theory-in-sage-2-of-3/)
 
-I've posted some user docs and videos about some of the game theory on [drvinceknight.github.com/Gamepy](http://drvinceknight.github.com/Gamepy/).
+The agent base model is in fact not quite yet re written but this is an ongoing
+piece of work by an MSc student. The repository will be
+[here](https://github.com/drvinceknight/agent-based-learn) where the library will
+be packaged properly.
+
+Another package that might be of interest is this [Axelrod
+library](https://github.com/Axelrod-Python/Axelrod) which
+allows you to reproduce the Axelrod tournament.
 
 # License Information
 
